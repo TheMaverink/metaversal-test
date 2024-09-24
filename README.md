@@ -4,7 +4,7 @@ This project is built using Next.js and Tailwind CSS, and it fetches data from t
 
 ## Requirements
 
-- [ ] Use Next.js and Tailwind CSS
+- [x] Use Next.js and Tailwind CSS
 - [ ] Build responsive UIs
 - [ ] Handle loading states
 - [ ] Handle error states
