@@ -27,7 +27,7 @@ const BackButton = () => {
 export default function TitleBar() {
   const pathname = usePathname();
 
-  const isProfilePage = pathname == '/profile';
+  const isProfilePage = pathname.includes('/profile');
 
   return (
     <div

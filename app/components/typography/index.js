@@ -10,8 +10,8 @@ export const Heading3 = ({children})=>{
     return <h3 className="font-extrabold text-[18px] leading-[18px]">{children}</h3>
 }
 
-export const Heading4 = ({children})=>{
-    return <h4 className="font-extrabold text-[18px] leading-[18px]">{children}</h4>
+export const Heading4 = ({children,style})=>{
+    return <h4 className="font-extrabold text-[18px] leading-[18px]" style={style}>{children}</h4>
 }
 
 export const Body = ({children})=>{

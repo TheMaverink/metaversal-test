@@ -16,8 +16,6 @@ export default async function FeedPage() {
     return usersIdsWithMostPosts.includes(user.id.toString());
   });
 
-  console.log('users');
-  console.log(users);
   return (
     <section className="page-feed">
       <div className="suggested-posts flex flex-col space-y-4">
@@ -31,7 +29,7 @@ export default async function FeedPage() {
 
           return (
             <PostCard
-              key={`post-${id}`}
+              key={`suggested-post-${id}`}
               firstName={postUser.firstName}
               lastName={postUser.lastName}
               username={postUser.username}
@@ -40,6 +38,7 @@ export default async function FeedPage() {
               likes={reactions.likes}
               dislikes={reactions.dislikes}
               views={views}
+              userId={userId}
             ></PostCard>
           );
         })}
@@ -50,7 +49,7 @@ export default async function FeedPage() {
         {usersWithMostPosts.map((user, index) => {
           return (
             <UserCard
-              key={`user-card-${user.id}`}
+              key={`who-to-follow-${user.id}`}
               firstName={user.firstName}
               lastName={user.lastName}
               username={user.username}

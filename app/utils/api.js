@@ -58,10 +58,32 @@ export const getAllUsers = async () => {
   }
 };
 
-export const getSuggestedPosts = async () => {};
+export const getUser = async (userId, withPosts = true) => {
+  try {
+    const url = `${USERS_BASE_URL}/${userId}`;
 
-export const getRecentPosts = async () => {};
+    const response = await fetch(url);
 
-export const getUser = async () => {};
+    if (!response.ok) {
+      throw new Error('Failed to fetch');
+    }
+
+    let responseJson = await response.json();
+
+    if (withPosts) {
+      const userPostsResponse = await fetch(`${url}/posts`);
+
+      if (userPostsResponse.ok) {
+        const userPostsResponseJson = await userPostsResponse.json();
+
+        responseJson.posts = userPostsResponseJson.posts;
+      }
+    }
+
+    return responseJson;
+  } catch (error) {
+    throw error;
+  }
+};
 
 export const getUserPosts = async () => {};

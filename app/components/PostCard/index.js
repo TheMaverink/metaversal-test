@@ -13,11 +13,12 @@ export default function PostCard({
   likes,
   dislikes,
   views,
+  userId
 }) {
   return (
     <div className="post-card flex flex-col justify-evenly border border-[#E4E7E8] bg-white rounded-[16px] shadow-custom">
       <div className="post-card-header flex justify-start items-center">
-        <Avatar />
+        <Avatar userId={userId}/>
         <div className="post-card-header-text flex flex-col">
           <Heading4>{`${firstName} ${lastName}`}</Heading4>
           <p>{username}</p>
@@ -28,8 +29,8 @@ export default function PostCard({
         <p>{body}</p>
 
         <div className="post-card-body-tags flex">
-          {tags.map((tag, index) => {
-            return <p>{tag}</p>;
+          {tags.map((tag) => {
+            return <p key={`tag-${tag}-${username}`}>{tag}</p>;
           })}
         </div>
       </div>
