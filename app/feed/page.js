@@ -1,6 +1,9 @@
 import React from 'react';
 import { getAllPosts, getAllUsers } from '../utils/api';
 import PostCard from '../components/PostCard';
+import UserCard from '../components/UserCard';
+
+import RecentPosts from './RecentPosts';
 
 import { Heading2 } from '../components/typography';
 
@@ -43,10 +46,20 @@ export default async function FeedPage() {
       </div>
 
       <div className="who-to-follow flex flex-col space-y-4">
+        <Heading2>Who to follow</Heading2>
         {usersWithMostPosts.map((user, index) => {
-          return <p>{user.firstName}</p>;
+          return (
+            <UserCard
+              key={`user-card-${user.id}`}
+              firstName={user.firstName}
+              lastName={user.lastName}
+              username={user.username}
+            ></UserCard>
+          );
         })}
       </div>
+
+      {users && <RecentPosts users={users} />}
     </section>
   );
 }

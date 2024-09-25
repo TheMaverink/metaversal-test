@@ -3,7 +3,7 @@ export const Heading1 = ({children})=>{
 }
 
 export const Heading2 = ({children})=>{
-    return <h2>{children}</h2>
+    return <h2 className="font-extrabold text-[18px] leading-[18px]">{children}</h2>
 }
 
 export const Heading3 = ({children})=>{
@@ -11,7 +11,7 @@ export const Heading3 = ({children})=>{
 }
 
 export const Heading4 = ({children})=>{
-    return <h4>{children}</h4>
+    return <h4 className="font-extrabold text-[18px] leading-[18px]">{children}</h4>
 }
 
 export const Body = ({children})=>{
