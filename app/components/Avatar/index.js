@@ -1,6 +1,10 @@
 import Image from 'next/image';
 
-const Avatar = ({ src, alt, size = 50 }) => {
+const Avatar = ({
+  src = '/images/avatar/avatar-md.png',
+  alt = 'avatar',
+  size = 50,
+}) => {
   return (
     <div
       className={`rounded-full overflow-hidden`}
