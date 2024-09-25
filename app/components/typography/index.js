@@ -1,5 +1,5 @@
 export const Heading1 = ({children})=>{
-    return <h1 className="text-primary">{children}</h1>
+    return <h1 className="text-h1">Emily Johnson</h1>
 }
 
 export const Heading2 = ({children})=>{
@@ -7,7 +7,7 @@ export const Heading2 = ({children})=>{
 }
 
 export const Heading3 = ({children})=>{
-    return <h3>{children}</h3>
+    return <h3 className="font-extrabold text-[18px] leading-[18px]">{children}</h3>
 }
 
 export const Heading4 = ({children})=>{
