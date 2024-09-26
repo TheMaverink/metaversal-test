@@ -1,4 +1,5 @@
 import Avatar from '../../components/Avatar';
+import ProfileCard from '../../components/ProfileCard';
 import { getUser, getUserPosts } from '../../utils/api';
 
 import {
@@ -13,27 +14,21 @@ import {
   BodyOverlineSmall,
 } from '../../components/typography';
 
-
-
 export default async function ProfilePage({ params }) {
   const { userId } = params;
 
-  const user = await getUser(userId)
+  const user = await getUser(userId);
 
-  console.log("user")
-  console.log(user)
+  console.log('user');
+  console.log(user);
 
   //maybe get data from context/local storage or cache?
 
   return (
-    <>
+    <section className="page-profile">
       <div className="flex items-center">
-        <Avatar size={80} />
-        <div className="ml-4">
-          <h2 className="text-lg font-semibold">John Doe</h2>
-          <p className="text-gray-500">Software Engineer</p>
-        </div>
+        <ProfileCard user={user} />
       </div>
-    </>
+    </section>
   );
 }

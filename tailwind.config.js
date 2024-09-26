@@ -15,21 +15,23 @@ module.exports = {
         background_light: '#ECE9FB',
         background_peach: '#FDEDE7',
       },
-      fontFamily: {
-        roboto: ['Roboto Flex', 'sans-serif'],
-      },
       fontWeight: {
-        '800': '800',
+        medium: '500',
+        bold: '800',
       },
       fontSize: {
-        h1: ['30px', { lineHeight: '1', fontWeight: '800',fontStretch: '151%',color:'red' }],
+        h1: [
+          '30px',
+          {
+            lineHeight: '1',
+            color: 'red',
+          },
+        ],
         h2: ['2rem', { lineHeight: '1.3', fontWeight: '600' }],
         h3: ['2rem', { lineHeight: '1.3', fontWeight: '600' }],
         h4: ['2rem', { lineHeight: '1.3', fontWeight: '600' }],
       },
-      
     },
-    
   },
   plugins: [],
 };

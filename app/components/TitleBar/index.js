@@ -1,6 +1,7 @@
 'use client';
 
 import React from 'react';
+import Image from 'next/image';
 import { useRouter, usePathname } from 'next/navigation';
 
 import { Heading3 } from '../typography';
@@ -17,7 +18,12 @@ const BackButton = () => {
       onClick={handleBack}
       className="absolute top-1/2 left-[2%] transform -translate-y-1/2 w-6 h-12"
     >
-      <img src="/images/icons/back-icon.png" alt="Back" />
+      <Image
+        src="/images/icons/back-icon.png"
+        alt="back-button"
+        width={6}
+        height={12}
+      />
     </button>
   );
 };

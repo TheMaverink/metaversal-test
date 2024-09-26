@@ -11,7 +11,7 @@ const robotoFlex = Roboto_Flex({
   subsets: ['latin'],
   variable: '--roboto-flex',
   display: 'swap',
-  weight: ['500', '800'],
+  weight: ['500', '700', '800'],
   // axes: ["wdth"] //figure it out why is not working
 });
 
@@ -20,7 +20,9 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <body className={`${robotoFlex.className} antialiased bg-[#F9FAFA]`}>
         <TitleBar></TitleBar>
-        <div className="w-[70vw] max-w-[700px] mx-auto min-h-screen p-[32px] gap-[48px]">{children}</div>
+        <div className="w-[70vw] max-w-[700px] mx-auto min-h-screen p-[32px] gap-[48px]">
+          {children}
+        </div>
       </body>
     </html>
   );

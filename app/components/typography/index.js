@@ -1,35 +1,111 @@
-export const Heading1 = ({children})=>{
-    return <h1 className="text-h1">Emily Johnson</h1>
-}
+//need to fix 'wdth'
 
-export const Heading2 = ({children})=>{
-    return <h2 className="font-extrabold text-[18px] leading-[18px]">{children}</h2>
-}
+export const Heading1 = ({ children, style }) => {
+  return (
+    <h1
+      className="font-bold text-primary_black text-[30px] leading-[1]"
+      style={style}
+    >
+      {children}
+    </h1>
+  );
+};
 
-export const Heading3 = ({children})=>{
-    return <h3 className="font-extrabold text-[18px] leading-[18px]">{children}</h3>
-}
+export const Heading2 = ({ children, style }) => {
+  return (
+    <h2
+      className="font-bold text-primary_black text-[24px] leading-[1]"
+      style={style}
+    >
+      {children}
+    </h2>
+  );
+};
 
-export const Heading4 = ({children,style})=>{
-    return <h4 className="font-extrabold text-[18px] leading-[18px]" style={style}>{children}</h4>
-}
+export const Heading3 = ({ children, style }) => {
+  return (
+    <h3
+      className="font-bold text-primary_black text-[18px] leading-[1]"
+      style={style}
+    >
+      {children}
+    </h3>
+  );
+};
 
-export const Body = ({children})=>{
-    return <p>{children}</p>
-}
+export const Heading4 = ({ children, style }) => {
+  return (
+    <h4
+      className="font-bold text-primary_black text-[16px] leading-[1]"
+      style={style}
+    >
+      {children}
+    </h4>
+  );
+};
 
-export const BodyMedium = ({children})=>{
-    return <p>{children}</p>
-}
+export const Body = ({ children, style }) => {
+  return (
+    <p
+      className="font-medium text-primary_black text-[16px] leading-[1.17]"
+      style={style}
+    >
+      {children}
+    </p>
+  );
+};
 
-export const BodySmall = ({children})=>{
-    return <p>{children}</p>
-}
+export const BodyBold = ({ children, style }) => {
+    return (
+      <p
+        className="font-[700] text-primary_black text-[16px] leading-[1.17]"
+        style={style}
+      >
+        {children}
+      </p>
+    );
+  };
 
-export const BodyOverline = ({children})=>{
-    return <p>{children}</p>
-}
+export const BodyMedium = ({ children, style }) => {
+  return (
+    <p
+      className="font-medium text-primary_black text-[14px] leading-[1.15]"
+      style={style}
+    >
+      {children}
+    </p>
+  );
+};
 
-export const BodyOverlineSmall = ({children})=>{
-    return <p>{children}</p>
-}
+export const BodySmall = ({ children, style }) => {
+  return (
+    <p
+      className="font-medium text-primary_black text-[12px] leading-[1.16]"
+      style={style}
+    >
+      {children}
+    </p>
+  );
+};
+
+export const BodyOverline = ({ children, style }) => {
+  return (
+    <p
+      className="font-medium text-primary_black text-[16px] leading-[1.17] uppercase"
+      style={style}
+    >
+      {children}
+    </p>
+  );
+};
+
+export const BodyOverlineSmall = ({ children, style }) => {
+  return (
+    <p
+      className="font-medium text-primary_black text-[12px] leading-[1.16] uppercase"
+      style={style}
+    >
+      {children}
+    </p>
+  );
+};

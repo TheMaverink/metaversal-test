@@ -10,6 +10,8 @@ const Avatar = ({
   size = 50,
   withHover = true,
   userId,
+  withBorder,
+  style
 }) => {
   const [hovered, setHovered] = React.useState(false);
 
@@ -17,7 +19,12 @@ const Avatar = ({
     <Link href={`/profile/${userId}`}>
       <div
         className={`rounded-full overflow-hidden cursor-pointer`}
-        style={{ width: `${size}px`, height: `${size}px` }}
+        style={{
+          width: `${size}px`,
+          height: `${size}px`,
+          border: withBorder ? '5px solid white' : 'none',
+          ...style
+        }}
       >
         <Image
           src={src}

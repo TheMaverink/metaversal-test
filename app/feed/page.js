@@ -18,7 +18,7 @@ export default async function FeedPage() {
 
   return (
     <section className="page-feed">
-      <div className="suggested-posts flex flex-col space-y-4">
+      <div className="page-feed suggested-posts flex flex-col space-y-4">
         <Heading2>Suggested Posts</Heading2>
         {suggestedPosts.map((post, index) => {
           const { id, title, body, tags, reactions, views, userId } = post;

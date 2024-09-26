@@ -3,6 +3,8 @@
 import React from 'react';
 import { getButtonBackgrounds } from '../../utils/misc';
 
+import {BodyBold} from '../typography'
+
 const BUTTON_BACKGROUNDS = getButtonBackgrounds();
 
 export default function Button({
@@ -10,6 +12,7 @@ export default function Button({
   label,
   onClick,
   backgroundType = BUTTON_BACKGROUNDS.GRADIENT,
+  style
 }) {
   const [hovered, setHovered] = React.useState(false);
 
@@ -37,12 +40,12 @@ export default function Button({
   return (
     <button
       onClick={onClick}
-      className={`px-4 py-2 rounded-[100px]`}
-      style={customStyle}
+      className={`py-[8px] px-[14px] rounded-[100px] flex justify-center items-center`}
+      style={{...customStyle,...style }}
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
     >
-      {label}
+      <span>{label}</span>
     </button>
   );
 }

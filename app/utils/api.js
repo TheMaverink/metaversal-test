@@ -64,6 +64,12 @@ export const getUser = async (userId, withPosts = true) => {
 
     const response = await fetch(url);
 
+    console.log("url")
+    console.log(url)
+
+    console.log("response.ok")
+    console.log(response.ok)
+
     if (!response.ok) {
       throw new Error('Failed to fetch');
     }
