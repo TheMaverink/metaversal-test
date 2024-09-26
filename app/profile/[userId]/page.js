@@ -29,10 +29,10 @@ export default async function ProfilePage({ params }) {
     <section className="page-profile">
       <div className="page-feed user-recent-posts flex flex-col space-y-4 gap-[48px]">
         <ProfileCard user={user} />
-        {/* <div className="flex flex-col gap-[16px]">
+        <div className="flex flex-col gap-[16px]">
           <Heading2>Recent</Heading2>
           <RecentPosts user={user} />
-        </div> */}
+        </div>
       </div>
     </section>
   );

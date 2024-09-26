@@ -1,81 +1,95 @@
 'use client';
 
-//FIX!!
-
-import { useEffect, useState, useRef } from 'react';
+import { useEffect, useState, useRef, useCallback } from 'react';
 import PostCard from '../../components/PostCard';
 import LoadingSpinner from '../../components/LoadingSpinner';
+import ErrorCard from '../../components/ErrorCard';
 
 const InfiniteScrollPosts = ({ user }) => {
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [hasMorePosts, setHasMorePosts] = useState(true);
+
+  const [initialFetchDone, setInitialFetchDone] = useState(false);
   const observer = useRef();
-  const [initialFetchDone, setInitialFetchDone] = useState(false); // New state
+  const fetchingRef = useRef(false);
 
   const POSTS_TO_FETCH = 5;
   const LOADING_DELAY = 3000;
 
-  const fetchPosts = async (skipCount) => {
-    setLoading(true);
-    await new Promise((resolve) => setTimeout(resolve, LOADING_DELAY));
+  const fetchPosts = useCallback(
+    async (skipCount) => {
+      if (fetchingRef.current || loading) return;
 
-    const res = await fetch(
-      `https://dummyjson.com/users/${user.id}/posts?limit=${POSTS_TO_FETCH}&skip=${skipCount}`
-    );
+      fetchingRef.current = true;
+      setLoading(true);
 
-    console.log("res!!!")
-    console.log(res)
+      await new Promise((resolve) => setTimeout(resolve, LOADING_DELAY));
 
-    const data = await res.json();
+      const res = await fetch(
+        `https://dummyjson.com/users/${user.id}/posts?limit=${POSTS_TO_FETCH}&skip=${skipCount}`
+      );
 
-    console.log("data!!!")
-    console.log(data)
+      const data = await res.json();
 
-    setPosts((prevPosts) => [...prevPosts, ...data.posts]);
-    setLoading(false);
-  };
-
-   useEffect(() => {
-     if (!initialFetchDone ) {
-        
-       fetchPosts(0); 
-       setInitialFetchDone(true);  
-     }
-   }, [initialFetchDone]);  
-
-  const lastPostElementRef = (node) => {
-    if (loading) return;
-    if (observer.current) observer.current.disconnect();
-
-    observer.current = new IntersectionObserver(
-      (entries) => {
-        if (entries[0].isIntersecting) {
-          fetchPosts(posts.length); 
-        }
-      },
-      {
-        rootMargin: '0px',
-        threshold: 1.0,
+      if (data.posts.length === 0) {
+        setHasMorePosts(false);
+      } else {
+        setPosts((prevPosts) => [...prevPosts, ...data.posts]);
       }
-    );
 
-    if (node) observer.current.observe(node);
-  };
+      fetchingRef.current = false;
+      setLoading(false);
+    },
+    [user.id, loading]
+  );
+
+  useEffect(() => {
+    const doInitialFetch = async () => {
+      await fetchPosts(0);
+      setInitialFetchDone(true);
+    };
+
+    if (!initialFetchDone) {
+      doInitialFetch();
+    }
+  }, [initialFetchDone, fetchPosts]);
+
+  const lastPostElementRef = useCallback(
+    (node) => {
+      if (loading) return;
+      if (observer.current) observer.current.disconnect();
+
+      observer.current = new IntersectionObserver(
+        (entries) => {
+          if (entries[0].isIntersecting && hasMorePosts) {
+            fetchPosts(posts.length);
+          }
+        },
+        {
+          rootMargin: '0px',
+          threshold: 1.0,
+        }
+      );
+
+      if (node) observer.current.observe(node);
+    },
+    [loading, posts.length, hasMorePosts, fetchPosts]
+  );
 
   return (
-    <div className="pb-12 flex flex-col gap-[16px]">
+    <div className="pb-12 flex flex-col items-center gap-[16px]">
       {posts.map((post, index) => {
-     
-        const isLastPost = index === posts.length - 1; // Check if it's the last post
+        const isLastPost = index === posts.length - 1;
 
         return (
           <div
-            key={`recent-post-${post.id}`} // Unique key for each post
-            ref={isLastPost ? lastPostElementRef : null} // Apply the ref only to the last post
+            key={`recent-post-${post.id}`}
+            ref={isLastPost ? lastPostElementRef : null}
             className="post-card"
           >
             <PostCard
-              firstName={user?.firstName} // Optional chaining in case user is not found
+              firstName={user?.firstName}
               lastName={user?.lastName}
               username={user?.username}
               body={post.body}
@@ -88,7 +102,8 @@ const InfiniteScrollPosts = ({ user }) => {
           </div>
         );
       })}
-      <LoadingSpinner isLoading={loading} />
+      {loading && <LoadingSpinner isLoading={loading} />}
+      {!hasMorePosts && <ErrorCard errorMessage="No more posts to load." />}
     </div>
   );
 };

@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 
 export const useWindowSize = () => {
   const [windowSize, setWindowSize] = useState({
@@ -22,3 +22,24 @@ export const useWindowSize = () => {
 
   return windowSize;
 };
+
+// export const useIntersectionObserver = (options) => {
+//   const [isIntersecting, setIsIntersecting] = useState(false);
+//   const observerRef = useRef(null);
+
+//   useEffect(() => {
+//     if (observerRef.current) {
+//       const observer = new IntersectionObserver(([entry]) => {
+//         setIsIntersecting(entry.isIntersecting);
+//       }, options);
+
+//       observer.observe(observerRef.current);
+
+//       return () => {
+//         observer.disconnect();
+//       };
+//     }
+//   }, [options]);
+
+//   return [observerRef, isIntersecting];
+// };

@@ -6,7 +6,7 @@ import Image from 'next/image';
 export default function LoadingSpinner({ isLoading, withLabel }) {
   return (
     <div
-      className={`loading-spinner transition-opacity ease-in-out duration-500 ${
+      className={`loading-spinner transition-opacity ease-in-out duration-500 p-4 ${
         isLoading ? 'opacity-100' : 'opacity-0'
       }`}
     >
