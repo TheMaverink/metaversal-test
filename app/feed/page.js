@@ -2,63 +2,63 @@ import React from 'react';
 import { getAllPosts, getAllUsers } from '../utils/api';
 import PostCard from '../components/PostCard';
 import UserCard from '../components/UserCard';
-
+import ErrorCard from '../components/ErrorCard';
 import RecentPosts from './RecentPosts';
-
 import { Heading2 } from '../components/typography';
 
 export default async function FeedPage() {
   const { posts, usersIdsWithMostPosts, suggestedPosts } = await getAllPosts();
-
   const { users } = await getAllUsers();
 
-  const usersWithMostPosts = users.filter((user) => {
-    return usersIdsWithMostPosts.includes(user.id.toString());
-  });
+  // Filter users with the most posts
+  const usersWithMostPosts = users.filter((user) => 
+    usersIdsWithMostPosts.includes(user.id.toString())
+  );
 
   return (
-    <section className="page-feed">
-      <div className="page-feed suggested-posts flex flex-col space-y-4">
+    <section className="page-feed flex flex-col gap-[48px]">
+      <div className="page-feed suggested-posts flex flex-col space-y-4 ">
         <Heading2>Suggested Posts</Heading2>
-        {suggestedPosts.map((post, index) => {
-          const { id, title, body, tags, reactions, views, userId } = post;
-
-          const postUser = users.filter((user) => {
-            return user.id == userId;
-          })[0];
+        {suggestedPosts.map((post) => {
+          const postUser = users.find(user => user.id === post.userId);
 
           return (
             <PostCard
-              key={`suggested-post-${id}`}
+              key={`suggested-post-${post.id}`}
               firstName={postUser.firstName}
               lastName={postUser.lastName}
               username={postUser.username}
-              body={body}
-              tags={tags}
-              likes={reactions.likes}
-              dislikes={reactions.dislikes}
-              views={views}
-              userId={userId}
-            ></PostCard>
+              body={post.body}
+              tags={post.tags}
+              likes={post.reactions.likes}
+              dislikes={post.reactions.dislikes}
+              views={post.views}
+              userId={postUser.id}
+            />
           );
         })}
       </div>
 
-      <div className="who-to-follow flex flex-col space-y-4">
-        <Heading2>Who to follow</Heading2>
-        {usersWithMostPosts.map((user, index) => {
-          return (
-            <UserCard
-              key={`who-to-follow-${user.id}`}
-              firstName={user.firstName}
-              lastName={user.lastName}
-              username={user.username}
-            ></UserCard>
-          );
-        })}
+      <div className="who-to-follow grid grid-cols-2 gap-4">
+        <Heading2 style={{ gridColumn: 'span 2' }}>
+          Who to follow
+        </Heading2>
+        {usersWithMostPosts.map((user) => (
+          <UserCard
+            key={`who-to-follow-${user.id}`}
+            firstName={user.firstName}
+            lastName={user.lastName}
+            username={user.username}
+            userId={user.id}
+          />
+        ))}
       </div>
 
-      {users && <RecentPosts users={users} />}
+      <div className="flex flex-col gap-[16px]">
+        <Heading2>Recent</Heading2>
+        {/* Pass the users directly to RecentPosts */}
+        <RecentPosts users={users} />
+      </div>
     </section>
   );
 }

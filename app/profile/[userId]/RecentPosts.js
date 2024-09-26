@@ -83,6 +83,7 @@ const InfiniteScrollPosts = ({ user }) => {
               likes={post.reactions.likes}
               dislikes={post.reactions.dislikes}
               views={post.views}
+              clickable={false}
             />
           </div>
         );

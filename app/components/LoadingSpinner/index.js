@@ -1,3 +1,5 @@
+'use client'
+
 import React from 'react';
 import Image from 'next/image';
 
@@ -16,7 +18,6 @@ export default function LoadingSpinner({ isLoading, withLabel }) {
         className="object-cover"
         style={{
           animation: 'spin-smooth 1.5s linear infinite',
-          margin: '0 auto',
         }}
       />
       {withLabel && <p className="fade-in">Loading...</p>}

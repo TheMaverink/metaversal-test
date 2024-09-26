@@ -29,13 +29,6 @@ export default function ProfileCard({ user }) {
     return accumulator + (post.reactions.likes || 0);
   }, 0);
 
-  console.log('address');
-  console.log(address);
-  console.log('address');
-  console.log(address);
-  console.log('posts.length');
-  console.log(posts.length);
-
   const TOP_GRADIENT_SIZE = 340;
 
   return (
@@ -61,6 +54,7 @@ export default function ProfileCard({ user }) {
         <Avatar
           size={120}
           withBorder={true}
+          clickable={false}
           style={{
             transform: 'translate(0,-60px)',
             boxShadow: '0px 1px 3px 0px #1A1A1A14',
