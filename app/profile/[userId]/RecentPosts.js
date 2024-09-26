@@ -3,10 +3,10 @@
 //FIX!!
 
 import { useEffect, useState, useRef } from 'react';
-import PostCard from '../components/PostCard';
-import LoadingSpinner from '../components/LoadingSpinner';
+import PostCard from '../../components/PostCard';
+import LoadingSpinner from '../../components/LoadingSpinner';
 
-const InfiniteScrollPosts = ({ users }) => {
+const InfiniteScrollPosts = ({ user }) => {
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(false);
   const observer = useRef();
@@ -20,16 +20,23 @@ const InfiniteScrollPosts = ({ users }) => {
     await new Promise((resolve) => setTimeout(resolve, LOADING_DELAY));
 
     const res = await fetch(
-      `https://dummyjson.com/posts?limit=${POSTS_TO_FETCH}&skip=${skipCount}`
+      `https://dummyjson.com/users/${user.id}/posts?limit=${POSTS_TO_FETCH}&skip=${skipCount}`
     );
+
+    console.log("res!!!")
+    console.log(res)
+
     const data = await res.json();
+
+    console.log("data!!!")
+    console.log(data)
 
     setPosts((prevPosts) => [...prevPosts, ...data.posts]);
     setLoading(false);
   };
 
    useEffect(() => {
-     if (!initialFetchDone && !loading) {
+     if (!initialFetchDone ) {
         
        fetchPosts(0); 
        setInitialFetchDone(true);  
@@ -56,9 +63,9 @@ const InfiniteScrollPosts = ({ users }) => {
   };
 
   return (
-    <div className="pb-12">
+    <div className="pb-12 flex flex-col gap-[16px]">
       {posts.map((post, index) => {
-        const postUser = users.find((user) => user.id === post.userId);
+     
         const isLastPost = index === posts.length - 1; // Check if it's the last post
 
         return (
@@ -68,16 +75,15 @@ const InfiniteScrollPosts = ({ users }) => {
             className="post-card"
           >
             <PostCard
-              firstName={postUser?.firstName} // Optional chaining in case user is not found
-              lastName={postUser?.lastName}
-              username={postUser?.username}
+              firstName={user?.firstName} // Optional chaining in case user is not found
+              lastName={user?.lastName}
+              username={user?.username}
               body={post.body}
               tags={post.tags}
               likes={post.reactions.likes}
               dislikes={post.reactions.dislikes}
               views={post.views}
             />
-        
           </div>
         );
       })}

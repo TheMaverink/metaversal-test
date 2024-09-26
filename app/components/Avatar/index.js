@@ -2,7 +2,7 @@
 
 import React from 'react';
 import Image from 'next/image';
-import Link from 'next/link'; // Import Link from next/link
+import Link from 'next/link'; 
 
 const Avatar = ({
   src = '/images/avatar/avatar-md.png',
