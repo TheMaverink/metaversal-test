@@ -5,6 +5,10 @@ import Avatar from '../Avatar';
 import { Heading4, BodySmall, BodyMedium } from '../typography';
 import Image from 'next/image';
 import Link from 'next/link';
+import Skeleton from 'react-loading-skeleton';
+import 'react-loading-skeleton/dist/skeleton.css';
+
+import PostCardFooter from './PostCardFooter';
 
 export default function PostCard({
   firstName,
@@ -42,7 +46,11 @@ export default function PostCard({
       style={{ boxShadow: '0px 1px 3px 0px #1A1A1A14' }}
     >
       <div className="flex gap-[16px] p-[16px]">
-        <Avatar userId={userId} clickable={redirectToUser} />
+        {false ? (
+          <Avatar userId={userId} clickable={redirectToUser} />
+        ) : (
+          <Skeleton containerClassName="flex-1" />
+        )}
 
         <div className="flex flex-col gap-[12px]">
           <div className="post-card-header flex justify-start items-center">
@@ -69,17 +77,16 @@ export default function PostCard({
             >
               <BodyMedium style={{ color: '#5C6970' }}>
                 {getTruncatedBody()}
-                {!isExpanded &&
-                  body.length > 200 && ( 
-                    <span
-                      className=" cursor-pointer"
-                      onClick={toggleExpand}
-                      style={{ color: '#4426D9' }}
-                    >
-                      {' '}
-                      learn more
-                    </span>
-                  )}
+                {!isExpanded && body.length > 200 && (
+                  <span
+                    className=" cursor-pointer"
+                    onClick={toggleExpand}
+                    style={{ color: '#4426D9' }}
+                  >
+                    {' '}
+                    learn more
+                  </span>
+                )}
               </BodyMedium>
             </div>
 
@@ -97,43 +104,12 @@ export default function PostCard({
         </div>
       </div>
 
-      <div
-        className="post-card-footer flex h-[48px] gap-[24px] p-[16px]"
-        style={{ borderTop: '1px solid #F1F3F4' }}
-      >
-        <div className="post-card-footer-item flex items-center gap-[4px] cursor-pointer">
-          <Image
-            src={'/images/icons/like-icon.png'}
-            alt={'like icon'}
-            width={16}
-            height={16}
-            className="object-cover"
-          />
-          <BodyMedium style={{ color: '#5C6970' }}>{likes}</BodyMedium>
-        </div>
-
-        <div className="post-card-footer-item flex items-center gap-[4px] cursor-pointer">
-          <Image
-            src={'/images/icons/send-icon.png'}
-            alt={'send icon'}
-            width={16}
-            height={16}
-            className="object-cover"
-          />
-          <BodyMedium style={{ color: '#5C6970' }}>{dislikes}</BodyMedium>
-        </div>
-
-        <div className="post-card-footer-item flex items-center gap-[4px] cursor-pointer">
-          <Image
-            src={'/images/icons/eye-icon.png'}
-            alt={'views icon'}
-            width={16}
-            height={16}
-            className="object-cover"
-          />
-          <BodyMedium style={{ color: '#5C6970' }}>{views}</BodyMedium>
-        </div>
-      </div>
+      <PostCardFooter
+        likes={likes}
+        dislikes={dislikes}
+        views={views}
+        loading={true}
+      />
 
       <style jsx>{`
         .post-body {

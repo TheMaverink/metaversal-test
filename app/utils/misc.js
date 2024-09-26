@@ -4,11 +4,3 @@ export const getButtonBackgrounds = () => {
     FLAT: 'flat',
   };
 };
-
-// export const getButtonSizes = () => {
-//   return {
-//     SMALL: 'sm',
-//     MEDIUM: 'md',
-//     LARGE: 'lg',
-//   };
-// };

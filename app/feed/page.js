@@ -2,12 +2,11 @@ import React from 'react';
 import { getAllPosts, getAllUsers } from '../utils/api';
 import PostCard from '../components/PostCard';
 import UserCard from '../components/UserCard';
-import ErrorCard from '../components/ErrorCard';
 import RecentPosts from './RecentPosts';
 import { Heading2 } from '../components/typography';
 
 export default async function FeedPage() {
-  const { posts, usersIdsWithMostPosts, suggestedPosts } = await getAllPosts();
+  const { usersIdsWithMostPosts, suggestedPosts } = await getAllPosts();
   const { users } = await getAllUsers();
 
   // Filter users with the most posts
@@ -57,7 +56,6 @@ export default async function FeedPage() {
 
       <div className="flex flex-col gap-[16px]">
         <Heading2>Recent</Heading2>
-        {/* Pass the users directly to RecentPosts */}
         <RecentPosts users={users} />
       </div>
     </section>

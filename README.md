@@ -18,6 +18,7 @@ This project is built using Next.js and Tailwind CSS, and it fetches data from t
 
 - [x] Implement server-side rendering
 - [ ] Test coverage: minimal
+- [ ] Use loading skeletons
 
 ## Setup Instructions
 

@@ -8,7 +8,6 @@ import { Body } from '../typography';
 const BUTTON_BACKGROUNDS = getButtonBackgrounds();
 
 export default function Button({
-  size,
   label,
   onClick,
   backgroundType = BUTTON_BACKGROUNDS.GRADIENT,

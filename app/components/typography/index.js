@@ -1,4 +1,3 @@
-//need to fix 'wdth'
 
 export const Heading1 = ({ children, style }) => {
   return (

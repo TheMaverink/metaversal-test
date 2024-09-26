@@ -16,8 +16,6 @@ export default function UserCard({
   lastName,
   username,
   userId,
-  posts,
-  likes,
 }) {
   const [hovered, setHovered] = React.useState(false);
 
