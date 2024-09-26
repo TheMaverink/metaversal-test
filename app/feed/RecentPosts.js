@@ -5,7 +5,6 @@ import PostCard from '../components/PostCard';
 import LoadingSpinner from '../components/LoadingSpinner';
 import ErrorCard from '../components/ErrorCard';
 
-//maybe turn this into a HOC (withInfiniteScroll)
 const InfiniteScrollPosts = ({ users }) => {
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -14,7 +13,7 @@ const InfiniteScrollPosts = ({ users }) => {
   const observer = useRef();
   const fetchingRef = useRef(false);
 
-  const POSTS_TO_FETCH = 100;
+  const POSTS_TO_FETCH = 5;
   const LOADING_DELAY = 1000;
 
   const fetchPosts = useCallback(
@@ -36,17 +35,29 @@ const InfiniteScrollPosts = ({ users }) => {
         setHasMorePosts(false);
       } else {
         setPosts((prevPosts) => [...prevPosts, ...data.posts]);
+        // Save posts to local storage
+        localStorage.setItem('posts', JSON.stringify([...posts, ...data.posts]));
       }
 
       fetchingRef.current = false;
       setLoading(false);
     },
-    [hasMorePosts, loading]
+    [hasMorePosts, loading, posts] // Added posts to the dependency array
   );
 
   useEffect(() => {
     const doInitialFetch = async () => {
-      await fetchPosts(0);
+      const savedSkipCount = parseInt(localStorage.getItem('skipCount')) || 0;
+      const savedPosts = JSON.parse(localStorage.getItem('posts')) || [];
+
+      if (savedPosts.length > 0) {
+        setPosts(savedPosts);
+        setHasMorePosts(savedSkipCount < savedPosts.length);
+      }
+      if (savedSkipCount >= savedPosts.length) {
+        await fetchPosts(savedSkipCount);
+      }
+
       setInitialFetchDone(true);
     };
 

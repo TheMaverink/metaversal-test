@@ -9,13 +9,20 @@ const BASE_URL = 'https://dummyjson.com';
 const POSTS_BASE_URL = `${BASE_URL}/posts`;
 const USERS_BASE_URL = `${BASE_URL}/users`;
 
-//sorting not working properly so have to filter it on the FE
+const POSTS_TTL = 60;
+const USERS_TTL = 3600;
+const USER_TTL = 3600;
+const USER_POSTS = 3600;
+
 
 export const getAllPosts = async () => {
   try {
     const url = `${POSTS_BASE_URL}?limit=0`;
 
-    const response = await fetch(url);
+    const response = await fetch(url, {
+      next: { revalidate: POSTS_TTL },
+      cache: 'force-cache',
+    });
 
     if (!response.ok) {
       throw new PostsLoadingError();
@@ -51,7 +58,10 @@ export const getAllUsers = async () => {
   try {
     const url = `${USERS_BASE_URL}?limit=0`;
 
-    const response = await fetch(url);
+    const response = await fetch(url, {
+      next: { revalidate: USERS_TTL },
+      cache: 'force-cache',
+    });
 
     if (!response.ok) {
       throw new UsersLoadingError();
@@ -69,7 +79,10 @@ export const getUser = async (userId, withPosts = true) => {
   try {
     const url = `${USERS_BASE_URL}/${userId}`;
 
-    const response = await fetch(url);
+    const response = await fetch(url, {
+      next: { revalidate: USER_TTL },
+      cache: 'force-cache',
+    });
 
     if (!response.ok) {
       throw new UserNotFoundError();
@@ -88,6 +101,27 @@ export const getUser = async (userId, withPosts = true) => {
 
       responseJson.posts = userPostsResponseJson.posts;
     }
+
+    return responseJson;
+  } catch (error) {
+    throw new GenericError(error.message);
+  }
+};
+
+export const getUserPosts = async (userId, numberPostsToFetch, skipCount) => {
+  try {
+    const url = `${USERS_BASE_URL}/${userId}/posts?limit=${numberPostsToFetch}&skip=${skipCount}`;
+
+    const response = await fetch(url, {
+      next: { revalidate: USER_POSTS },
+      cache: 'force-cache',
+    });
+
+    if (!response.ok) {
+      throw new PostsLoadingError();
+    }
+
+    const responseJson = await response.json();
 
     return responseJson;
   } catch (error) {

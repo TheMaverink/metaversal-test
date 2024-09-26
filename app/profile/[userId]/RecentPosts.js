@@ -5,6 +5,8 @@ import PostCard from '../../components/PostCard';
 import LoadingSpinner from '../../components/LoadingSpinner';
 import ErrorCard from '../../components/ErrorCard';
 
+import { getUserPosts } from '../../utils/api';
+
 const InfiniteScrollPosts = ({ user }) => {
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -15,7 +17,7 @@ const InfiniteScrollPosts = ({ user }) => {
   const fetchingRef = useRef(false);
 
   const POSTS_TO_FETCH = 5;
-  const LOADING_DELAY = 3000;
+  const LOADING_DELAY = 1000;
 
   const fetchPosts = useCallback(
     async (skipCount) => {
@@ -26,11 +28,7 @@ const InfiniteScrollPosts = ({ user }) => {
 
       await new Promise((resolve) => setTimeout(resolve, LOADING_DELAY));
 
-      const res = await fetch(
-        `https://dummyjson.com/users/${user.id}/posts?limit=${POSTS_TO_FETCH}&skip=${skipCount}`
-      );
-
-      const data = await res.json();
+      const data = await getUserPosts(user.id, POSTS_TO_FETCH, skipCount);
 
       if (data.posts.length === 0) {
         setHasMorePosts(false);

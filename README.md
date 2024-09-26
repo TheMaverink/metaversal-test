@@ -5,19 +5,18 @@ This project is built using Next.js and Tailwind CSS, and it fetches data from t
 ## Requirements
 
 - [x] Use Next.js and Tailwind CSS
-- [ ] Build responsive UIs
-- [ ] Handle loading states
-- [ ] Handle error states
-- [ ] Use https request caching
-- [ ] Cache data in storage
-- [ ] Commit your code to a GitHub repo (preferably as you build)
-- [ ] Deploy your app (for example: Netlify, Vercel)
-- [ ] Provide instructions in the repo README for running your application locally
+- [x] Build responsive UIs
+- [x] Handle loading states
+- [x] Handle error states
+- [x] Use https request caching
+- [x] Cache data in storage
+- [x] Commit your code to a GitHub repo (preferably as you build)
+- [x] Deploy your app (for example: Netlify, Vercel)
+- [x] Provide instructions in the repo README for running your application locally
 
 ## Bonus objectives
 
-- [ ] These are completely optional nice-to-haves:
-- [ ] Implement server-side rendering
+- [x] Implement server-side rendering
 - [ ] Test coverage: minimal
 
 ## Setup Instructions
