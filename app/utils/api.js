@@ -27,7 +27,7 @@ export const getAllPosts = async () => {
     if (!response.ok) {
       throw new PostsLoadingError();
     }
-
+  
     const responseJson = await response.json();
 
     const sortedPostsByLikes = responseJson.posts.sort((a, b) => {
@@ -110,6 +110,7 @@ export const getUser = async (userId, withPosts = true) => {
 
 export const getUserPosts = async (userId, numberPostsToFetch, skipCount) => {
   try {
+
     const url = `${USERS_BASE_URL}/${userId}/posts?limit=${numberPostsToFetch}&skip=${skipCount}`;
 
     const response = await fetch(url, {

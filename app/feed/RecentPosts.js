@@ -35,7 +35,7 @@ const InfiniteScrollPosts = ({ users }) => {
         setHasMorePosts(false);
       } else {
         setPosts((prevPosts) => [...prevPosts, ...data.posts]);
-        // Save posts to local storage
+  
         localStorage.setItem('posts', JSON.stringify([...posts, ...data.posts]));
       }
 

@@ -4,60 +4,74 @@ import PostCard from '../components/PostCard';
 import UserCard from '../components/UserCard';
 import RecentPosts from './RecentPosts';
 import { Heading2 } from '../components/typography';
+import ErrorCard from '../components/ErrorCard';
 
 export default async function FeedPage() {
-  const { usersIdsWithMostPosts, suggestedPosts } = await getAllPosts();
-  const { users } = await getAllUsers();
+  try {
+    const { usersIdsWithMostPosts, suggestedPosts } = await getAllPosts();
+    const response = await getAllUsers();
 
-  // Filter users with the most posts
-  const usersWithMostPosts = users.filter((user) =>
-    usersIdsWithMostPosts.includes(user.id.toString())
-  );
+    let usersWithMostPosts;
 
-  return (
-    <section className="page-feed flex flex-col gap-[48px]">
-      <div className="page-feed suggested-posts flex flex-col space-y-4 ">
-        <Heading2>Suggested Posts</Heading2>
-        {suggestedPosts.map((post) => {
-          const postUser = users.find((user) => user.id === post.userId);
+    if (response?.users) {
+      usersWithMostPosts = response.users.filter((user) =>
+        usersIdsWithMostPosts.includes(user.id.toString())
+      );
+    } else {
+      return;
+    }
 
-          return (
-            <PostCard
-              key={`suggested-post-${post.id}`}
-              firstName={postUser.firstName}
-              lastName={postUser.lastName}
-              username={postUser.username}
-              body={post.body}
-              tags={post.tags}
-              likes={post.reactions.likes}
-              dislikes={post.reactions.dislikes}
-              views={post.views}
-              userId={postUser.id}
-            />
-          );
-        })}
-      </div>
+    return (
+      <section className="page-feed flex flex-col gap-[48px]">
+        <div className="page-feed suggested-posts flex flex-col space-y-4 ">
+          <Heading2>Suggested Posts</Heading2>
+          {suggestedPosts.map((post) => {
+            const postUser = response.users.find(
+              (user) => user.id === post.userId
+            );
 
-      <div className="who-to-follow">
-        <Heading2>Who to follow</Heading2>
-        <div className="who-to-follow grid grid-cols-1 sm:grid-cols-2 gap-4 mt-[16px]">
-          {usersWithMostPosts.map((user) => (
-            <UserCard
-              key={`who-to-follow-${user.id}`}
-              firstName={user.firstName}
-              lastName={user.lastName}
-              username={user.username}
-              userId={user.id}
-              style={{ gridColumn: 'span 1' }}
-            />
-          ))}
+            return (
+              <PostCard
+                key={`suggested-post-${post.id}`}
+                firstName={postUser.firstName}
+                lastName={postUser.lastName}
+                username={postUser.username}
+                body={post.body}
+                tags={post.tags}
+                likes={post.reactions.likes}
+                dislikes={post.reactions.dislikes}
+                views={post.views}
+                userId={postUser.id}
+              />
+            );
+          })}
         </div>
-      </div>
 
-      <div className="flex flex-col gap-[16px]">
-        <Heading2>Recent</Heading2>
-        <RecentPosts users={users} />
-      </div>
-    </section>
-  );
+        <div className="who-to-follow">
+          <Heading2>Who to follow</Heading2>
+          <div className="who-to-follow grid grid-cols-1 sm:grid-cols-2 gap-4 mt-[16px]">
+            {usersWithMostPosts.map((user) => (
+              <UserCard
+                key={`who-to-follow-${user.id}`}
+                firstName={user.firstName}
+                lastName={user.lastName}
+                username={user.username}
+                userId={user.id}
+                style={{ gridColumn: 'span 1' }}
+              />
+            ))}
+          </div>
+        </div>
+
+        <div className="flex flex-col gap-[16px]">
+          <Heading2>Recent</Heading2>
+          <RecentPosts users={response.users} />
+        </div>
+      </section>
+    );
+  } catch (error) {
+    const errorMessage = error.message || 'An unknown error occurred';
+
+    return <ErrorCard errorMessage={errorMessage} />;
+  }
 }

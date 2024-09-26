@@ -17,8 +17,8 @@ const BackButton = () => {
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
       style={{
-        width: '24px',
-        height: '24px',
+        width: '26px',
+        height: '26px',
         backgroundColor: hovered ? 'rgba(0,0,0,0.05)' : 'transparent',
         borderRadius: '50%',
         transition: 'all 0.3s ease',
@@ -27,8 +27,8 @@ const BackButton = () => {
       <Image
         src="/images/icons/back-icon.png"
         alt="back-button"
-        width={6}
-        height={12}
+        width={8}
+        height={14}
         style={{ opacity: hovered ? 1 : 0.75 }}
       />
     </Link>
