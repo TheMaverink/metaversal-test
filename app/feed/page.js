@@ -11,7 +11,7 @@ export default async function FeedPage() {
   const { users } = await getAllUsers();
 
   // Filter users with the most posts
-  const usersWithMostPosts = users.filter((user) => 
+  const usersWithMostPosts = users.filter((user) =>
     usersIdsWithMostPosts.includes(user.id.toString())
   );
 
@@ -20,7 +20,7 @@ export default async function FeedPage() {
       <div className="page-feed suggested-posts flex flex-col space-y-4 ">
         <Heading2>Suggested Posts</Heading2>
         {suggestedPosts.map((post) => {
-          const postUser = users.find(user => user.id === post.userId);
+          const postUser = users.find((user) => user.id === post.userId);
 
           return (
             <PostCard
@@ -39,19 +39,20 @@ export default async function FeedPage() {
         })}
       </div>
 
-      <div className="who-to-follow grid grid-cols-2 gap-4">
-        <Heading2 style={{ gridColumn: 'span 2' }}>
-          Who to follow
-        </Heading2>
-        {usersWithMostPosts.map((user) => (
-          <UserCard
-            key={`who-to-follow-${user.id}`}
-            firstName={user.firstName}
-            lastName={user.lastName}
-            username={user.username}
-            userId={user.id}
-          />
-        ))}
+      <div className="who-to-follow">
+        <Heading2>Who to follow</Heading2>
+        <div className="who-to-follow grid grid-cols-1 sm:grid-cols-2 gap-4 mt-[16px]">
+          {usersWithMostPosts.map((user) => (
+            <UserCard
+              key={`who-to-follow-${user.id}`}
+              firstName={user.firstName}
+              lastName={user.lastName}
+              username={user.username}
+              userId={user.id}
+              style={{ gridColumn: 'span 1' }}
+            />
+          ))}
+        </div>
       </div>
 
       <div className="flex flex-col gap-[16px]">

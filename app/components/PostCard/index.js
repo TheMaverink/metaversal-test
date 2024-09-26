@@ -3,7 +3,6 @@
 import React from 'react';
 import Avatar from '../Avatar';
 import { Heading4, BodySmall, BodyMedium } from '../typography';
-
 import Image from 'next/image';
 import Link from 'next/link';
 
@@ -20,10 +19,26 @@ export default function PostCard({
   redirectToUser,
 }) {
   const [isUserHovered, setIsUserHovered] = React.useState(false);
+  const [isExpanded, setIsExpanded] = React.useState(false);
+
+  const toggleExpand = () => {
+    setIsExpanded((prev) => !prev);
+  };
+
+  const maxLines = 3;
+  const bodyLines = body.split('\n');
+
+  const getTruncatedBody = () => {
+    if (isExpanded) return body;
+    const truncatedBody = bodyLines.join(' ').slice(0, 200);
+    return truncatedBody.length < body.length
+      ? truncatedBody + '...'
+      : truncatedBody;
+  };
 
   return (
     <div
-      className="post-card flex flex-col justify-evenly border border-[#E4E7E8] bg-white rounded-[16px] shadow-custom "
+      className="post-card flex flex-col justify-evenly border border-[#E4E7E8] bg-white rounded-[16px] shadow-custom"
       style={{ boxShadow: '0px 1px 3px 0px #1A1A1A14' }}
     >
       <div className="flex gap-[16px] p-[16px]">
@@ -47,29 +62,46 @@ export default function PostCard({
               >{`@${username}`}</BodySmall>
             </Link>
           </div>
+
           <div className="post-card-body flex flex-col justify-center items-start gap-[12px]">
-            <BodyMedium style={{ color: '#5C6970' }}>{body}</BodyMedium>
+            <div
+              className={`post-body ${isExpanded ? 'expanded' : 'collapsed'}`}
+            >
+              <BodyMedium style={{ color: '#5C6970' }}>
+                {getTruncatedBody()}
+                {!isExpanded &&
+                  body.length > 200 && ( 
+                    <span
+                      className=" cursor-pointer"
+                      onClick={toggleExpand}
+                      style={{ color: '#4426D9' }}
+                    >
+                      {' '}
+                      learn more
+                    </span>
+                  )}
+              </BodyMedium>
+            </div>
 
             <div className="post-card-body-tags flex gap-[12px]">
-              {tags.map((tag) => {
-                return (
-                  <BodySmall
-                    key={`tag-${tag}-${username}`}
-                    style={{ color: '#4426D9' }}
-                  >{`#${tag}`}</BodySmall>
-                );
-              })}
+              {tags.map((tag) => (
+                <BodySmall
+                  key={`tag-${tag}-${username}`}
+                  style={{ color: '#4426D9' }}
+                >
+                  {`#${tag}`}
+                </BodySmall>
+              ))}
             </div>
           </div>
         </div>
       </div>
 
-      {/* //add hover effect? */}
       <div
-        className="post-card-footer flex h-[48px] gap-[24px] p-[16px] "
+        className="post-card-footer flex h-[48px] gap-[24px] p-[16px]"
         style={{ borderTop: '1px solid #F1F3F4' }}
       >
-        <div className="post-card-footer-item flex items-center gap-[4px]">
+        <div className="post-card-footer-item flex items-center gap-[4px] cursor-pointer">
           <Image
             src={'/images/icons/like-icon.png'}
             alt={'like icon'}
@@ -77,11 +109,10 @@ export default function PostCard({
             height={16}
             className="object-cover"
           />
-
           <BodyMedium style={{ color: '#5C6970' }}>{likes}</BodyMedium>
         </div>
 
-        <div className="post-card-footer-item flex items-center gap-[4px]">
+        <div className="post-card-footer-item flex items-center gap-[4px] cursor-pointer">
           <Image
             src={'/images/icons/send-icon.png'}
             alt={'send icon'}
@@ -89,11 +120,10 @@ export default function PostCard({
             height={16}
             className="object-cover"
           />
-
           <BodyMedium style={{ color: '#5C6970' }}>{dislikes}</BodyMedium>
         </div>
 
-        <div className="post-card-footer-item flex items-center gap-[4px] ">
+        <div className="post-card-footer-item flex items-center gap-[4px] cursor-pointer">
           <Image
             src={'/images/icons/eye-icon.png'}
             alt={'views icon'}
@@ -101,10 +131,28 @@ export default function PostCard({
             height={16}
             className="object-cover"
           />
-
           <BodyMedium style={{ color: '#5C6970' }}>{views}</BodyMedium>
         </div>
       </div>
+
+      <style jsx>{`
+        .post-body {
+          overflow: hidden;
+          display: -webkit-box;
+          -webkit-box-orient: vertical;
+          -webkit-line-clamp: ${maxLines};
+        }
+
+        .expanded {
+          display: block;
+          -webkit-line-clamp: unset;
+        }
+
+        .collapsed {
+          display: -webkit-box;
+          -webkit-line-clamp: ${maxLines};
+        }
+      `}</style>
     </div>
   );
 }

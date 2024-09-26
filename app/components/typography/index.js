@@ -47,7 +47,7 @@ export const Heading4 = ({ children, style }) => {
 export const Body = ({ children, style }) => {
   return (
     <p
-      className="font-medium text-primary_black text-[16px] leading-[1.17]"
+      className="sm:text-[12px] md:text-[14px] lg:text-[16px] font-medium text-primary_black  leading-[1.17]"
       style={style}
     >
       {children}
@@ -56,15 +56,15 @@ export const Body = ({ children, style }) => {
 };
 
 export const BodyBold = ({ children, style }) => {
-    return (
-      <p
-        className="font-[700] text-primary_black text-[16px] leading-[1.17]"
-        style={style}
-      >
-        {children}
-      </p>
-    );
-  };
+  return (
+    <p
+      className="font-[700] text-primary_black text-[16px] leading-[1.17]"
+      style={style}
+    >
+      {children}
+    </p>
+  );
+};
 
 export const BodyMedium = ({ children, style }) => {
   return (

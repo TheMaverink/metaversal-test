@@ -2,7 +2,7 @@ import ProfileCard from '../../components/ProfileCard';
 import { Heading2 } from '../../components/typography';
 import RecentPosts from './RecentPosts';
 import ErrorCard from '../../components/ErrorCard';
-import LoadingSpinner from '../../components/LoadingSpinner' 
+import LoadingSpinner from '../../components/LoadingSpinner';
 import { getUser } from '../../utils/api';
 
 export default async function ProfilePage({ params }) {
@@ -14,7 +14,7 @@ export default async function ProfilePage({ params }) {
   try {
     user = await getUser(userId);
   } catch (error) {
-    errorMessage = error.message; 
+    errorMessage = error.message;
   }
 
   if (errorMessage) {
@@ -22,17 +22,17 @@ export default async function ProfilePage({ params }) {
   }
 
   if (!user) {
-    return <LoadingSpinner isLoading={true}/>
+    return <LoadingSpinner isLoading={true} />;
   }
 
   return (
     <section className="page-profile">
       <div className="page-feed user-recent-posts flex flex-col space-y-4 gap-[48px]">
         <ProfileCard user={user} />
-        <div className="flex flex-col gap-[16px]">
+        {/* <div className="flex flex-col gap-[16px]">
           <Heading2>Recent</Heading2>
           <RecentPosts user={user} />
-        </div>
+        </div> */}
       </div>
     </section>
   );

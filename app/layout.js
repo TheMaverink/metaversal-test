@@ -20,7 +20,7 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <body className={`${robotoFlex.className} antialiased bg-[#F9FAFA]`}>
         <TitleBar></TitleBar>
-        <div className="w-[70vw] max-w-[700px] mx-auto min-h-screen p-[32px] gap-[48px]">
+        <div className="w-[100vw] max-w-[700px] mx-auto min-h-screen py-[32px] px-[16px] md:p-[32px]">
           {children}
         </div>
       </body>
