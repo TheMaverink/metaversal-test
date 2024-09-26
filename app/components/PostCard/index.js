@@ -46,11 +46,7 @@ export default function PostCard({
       style={{ boxShadow: '0px 1px 3px 0px #1A1A1A14' }}
     >
       <div className="flex gap-[16px] p-[16px]">
-        {false ? (
-          <Avatar userId={userId} clickable={redirectToUser} />
-        ) : (
-          <Skeleton containerClassName="flex-1" />
-        )}
+        <Avatar userId={userId} clickable={redirectToUser} />
 
         <div className="flex flex-col gap-[12px]">
           <div className="post-card-header flex justify-start items-center">

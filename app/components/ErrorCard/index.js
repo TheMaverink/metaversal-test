@@ -22,7 +22,7 @@ export default function ErrorCard({ errorMessage }) {
         <Heading3>{errorMessage}</Heading3>
 
         <Body style={{ color: '#5C6970' }}>
-          We're sorry but it's for the test.
+          We&apos;re sorry but it&apos;s for the test.
         </Body>
       </div>
     </div>

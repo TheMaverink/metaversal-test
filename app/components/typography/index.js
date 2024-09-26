@@ -46,7 +46,7 @@ export const Heading4 = ({ children, style }) => {
 export const Body = ({ children, style }) => {
   return (
     <p
-      className="sm:text-[12px] md:text-[14px] lg:text-[16px] font-medium text-primary_black  leading-[1.17]"
+      className="sm:text-[12px] md:text-[14px] lg:text-[16px] font-medium text-primary_black leading-[1.17]"
       style={style}
     >
       {children}

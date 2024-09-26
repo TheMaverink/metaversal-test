@@ -43,7 +43,7 @@ export default function Button({
   return (
     <button
       onClick={onClick}
-      className={`py-[6px] px-[10px] md:py-[8px] md:px-[14px] lg:py-[16px] lg:px-[24px] rounded-[100px] flex justify-center items-center`}
+      className={`py-[6px] px-[10px] md:py-[8px] md:px-[14px] xlg:py-[16px] xlg:px-[24px] rounded-[100px] flex justify-center items-center`}
       style={{ ...customStyle, ...style }}
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
